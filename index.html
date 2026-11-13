@@ -1,0 +1,1857 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Delisuggest — Coming soon</title>
+  <meta name="description" content="Delisuggest is coming soon: a format-independent recommendation feed with deep personalization and hardcore data protection. A product of Deliravi."/>
+  <meta property="og:title" content="Delisuggest — Coming soon"/>
+  <meta property="og:description" content="Deep personalization. Hardcore data protection. Any format."/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23009f3c'/%3E%3Ctext x='32' y='44' font-family='Arial' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3ED%3C/text%3E%3C/svg%3E"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css"/>
+  <script>
+    (function(){
+      try{
+        var s = localStorage.getItem('deliravi-theme');
+        var dark = s ? s === 'dark' : true;
+        document.documentElement.classList.add(dark ? 'dark' : 'light');
+      }
+      catch(e){
+        document.documentElement.classList.add('dark');
+      }
+    }
+    )();
+  </script>
+  <style>
+* {
+  box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+  }
+  *{
+    box-sizing:border-box;
+  }
+  body{
+    margin:0;
+    font-family:Inter,Roboto,"Helvetica Neue","Arial Nova","Nimbus Sans",Noto Sans,Arial,sans-serif;
+    font-size:1rem;
+    line-height:1.55;
+    color:var(--on-background);
+    background:var(--background);
+    -webkit-font-smoothing:antialiased;
+    view-transition-name:body-content;
+    --net-pattern:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='rgba(255,255,255,0.55)' stroke-width='1.2'%3E%3Cpath d='M10 30h50v40h40'/%3E%3Cpath d='M130 110h-40V70'/%3E%3Cpath d='M70 10v20'/%3E%3Ccircle cx='10' cy='30' r='3.5'/%3E%3Ccircle cx='100' cy='70' r='3.5'/%3E%3Ccircle cx='130' cy='110' r='3.5'/%3E%3Ccircle cx='70' cy='10' r='3.5'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  h1, h2, h3, h4, p, ul, ol, figure{
+    margin:0 0 .4rem;
+  }
+  h1{
+    font-size:2.6rem;
+    line-height:1.15;
+    font-weight:800;
+  }
+  h2{
+    font-size:2rem;
+    line-height:1.2;
+    font-weight:700;
+  }
+  h3{
+    font-size:1.3rem;
+    font-weight:700;
+  }
+  h4{
+    font-size:1.05rem;
+    font-weight:700;
+  }
+  ul, ol{
+    padding-left:1.25rem;
+  }
+  a{
+    color:var(--primary);
+  }
+  img{
+    max-width:100%;
+  }
+  .button, button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:.4rem;
+    border:none;
+    border-radius:.65rem;
+    cursor:pointer;
+    font:inherit;
+    font-weight:500;
+    padding:.55rem 1.15rem;
+    text-decoration:none;
+    background:var(--primary);
+    color:#fff;
+    transition:filter .2s,background .2s,color .2s,opacity .2s;
+  }
+  .button:hover, button:hover{
+    filter:brightness(1.08);
+  }
+  .primary{
+    background:var(--primary);
+    color:#fff;
+  }
+  .border{
+    background:transparent;
+    color:var(--on-background);
+    box-shadow:inset 0 0 0 1px var(--outline);
+  }
+  .small{
+    padding:.35rem .8rem;
+    font-size:.85rem;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    gap:.35rem;
+    border-radius:999px;
+    padding:.3rem .85rem;
+    font-size:.82rem;
+    font-weight:500;
+    background:var(--surface-container-high);
+    color:var(--on-surface);
+    white-space:normal;
+    max-width:100%;
+    height:auto;
+    min-height:2.2rem;
+    align-content:center;
+  }
+  .chip.primary{
+    background:var(--primary);
+    color:#fff;
+  }
+  .card{
+    background:var(--surface-container-low);
+    border-radius:.9rem 2rem;
+    padding:1.4rem;
+  }
+  i.bx{
+    font-size:1.35rem;
+    line-height:1;
+    display:inline-flex;
+  }
+  /* ---------- Light theme: white-friendly green palette ---------- */
+  .light{
+    --primary:#00843d;
+    --on-primary:#ffffff;
+    --primary-container:#b9f4c9;
+    --on-primary-container:#002109;
+    --secondary:#007c3f;
+    --on-secondary:#ffffff;
+    --secondary-container:#d3f5de;
+    --on-secondary-container:#003914;
+    --tertiary:#006e79;
+    --on-tertiary:#ffffff;
+    --tertiary-container:#b4ebff;
+    --on-tertiary-container:#001f24;
+    --error:#ba1a1a;
+    --on-error:#ffffff;
+    --error-container:#ffdad6;
+    --on-error-container:#410002;
+    --background:#fffbff;
+    --on-background:#1c1b1e;
+    --surface:#fffbff;
+    --on-surface:#1c1b1e;
+    --surface-variant:#e7e0eb;
+    --on-surface-variant:#49454e;
+    --outline:#7a757f;
+    --outline-variant:#cac4cf;
+    --shadow:#000000;
+    --scrim:#000000;
+    --inverse-surface:#313033;
+    --inverse-on-surface:#f4eff4;
+    --inverse-primary:#6bd68f;
+    --surface-dim:#ddd8dd;
+    --surface-bright:#fdf8fd;
+    --surface-container-lowest:#ffffff;
+    --surface-container-low:#f7f2f7;
+    --surface-container:#f2ecf1;
+    --surface-container-high:#ece7eb;
+    --surface-container-highest:#e6e1e6;
+  }
+  /* ---------- Dark theme (default) ---------- */
+  .dark{
+    --primary:#009f3c;
+    --on-primary:#ffffff;
+    --primary-container:#009f3c;
+    --on-primary-container:#ffffff;
+    --secondary:#20b993;
+    --on-secondary:#ffffff;
+    --secondary-container:#20b993;
+    --on-secondary-container:#005a6f;
+    --tertiary:#006e79;
+    --on-tertiary:#ffffff;
+    --tertiary-container:#006e79;
+    --on-tertiary-container:#ffffff;
+    --error:#ff5449;
+    --on-error:#690005;
+    --error-container:#93000a;
+    --on-error-container:#ffb4ab;
+    --background:black;
+    --on-background:white;
+    --surface:black;
+    --on-surface:#20b993;
+    --surface-variant:#49454e;
+    --on-surface-variant:#cac4cf;
+    --outline:#948f99;
+    --outline-variant:#49454e;
+    --shadow:#000000;
+    --scrim:#000000;
+    --inverse-surface:#e6e1e6;
+    --inverse-on-surface:#313033;
+    --inverse-primary:#5061a4;
+    --surface-dim:#141316;
+    --surface-bright:#3a383c;
+    --surface-container-lowest:#0f0e11;
+    --surface-container-low:#1c1b1e;
+    --surface-container:#3d4a3d;
+    --surface-container-high:#2b292d;
+    --surface-container-highest:#363438;
+  }
+  .fade-me-in{
+    opacity:1;
+    transition:opacity .8s ease-out;
+  }
+  .fade-me-in.pre{
+    opacity:0;
+  }
+  .logo-img{
+    display:none;
+  }
+  .dark .small-logo{
+    display:unset;
+    content:url(/static/logos/page/logodarkcompact.webp);
+  }
+  .light .small-logo{
+    display:unset;
+    content:url(/static/logos/page/logolightcompact.webp);
+  }
+  .dark .big-logo{
+    display:unset;
+    content:url(/static/logos/page/logodarkfull.webp);
+  }
+  .light .big-logo{
+    display:unset;
+    content:url(/static/logos/page/logolightfull.webp);
+  }
+  :root[data-transition="flash"]::view-transition-new(body-content){
+    animation:0.8s flash both;
+  }
+  #hiddenmenu{
+    display:none;
+    position:fixed;
+    inset-block-start:3.6rem;
+    inset-inline:0;
+    z-index:49;
+    background:var(--surface-container-low);
+    border-bottom:1px solid var(--outline-variant);
+    padding:1rem 1.25rem 1.4rem;
+    box-shadow:0 12px 30px rgba(0,0,0,.25);
+  }
+  #hiddenmenu.active{
+    display:block !important;
+  }
+  #hiddenmenu a{
+    display:block;
+    padding:.65rem .5rem;
+    color:var(--on-background);
+    text-decoration:none;
+    font-weight:500;
+    border-radius:.5rem;
+  }
+  #hiddenmenu a:hover{
+    color:var(--secondary);
+  }
+  #hiddenmenu .button{
+    margin-top:.8rem;
+    width:100%;
+  }
+  .button.primary, button.primary, a.primary{
+    color:#fff !important;
+  }
+  .button.secondary, button.secondary{
+    color:#fff;
+  }
+  html{
+    scroll-behavior:smooth;
+    scroll-padding-top:4.5rem;
+  }
+  .container{
+    max-width:1140px;
+    margin-inline:auto;
+    padding-inline:1.25rem;
+  }
+  .section{
+    padding:3.6rem 0;
+  }
+  .section-head{
+    max-width:720px;
+    margin:0 auto 2rem;
+    text-align:center;
+  }
+  .section-head h2{
+    margin-bottom:.5rem;
+  }
+  .muted{
+    color:var(--on-surface-variant);
+  }
+  .grid-3{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1.25rem;
+  }
+  .grid-4{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1.1rem;
+  }
+  .site-nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    align-items:center;
+    gap:1.1rem;
+    padding:.6rem 1.25rem;
+    background:var(--surface-container-low);
+    border-bottom:1px solid var(--outline-variant);
+    backdrop-filter:blur(10px);
+  }
+  .brand{
+    display:inline-flex;
+    align-items:center;
+    gap:.6rem;
+    text-decoration:none;
+  }
+  .brand .small-logo{
+    height:2.1rem;
+    width:auto;
+  }
+  .nav-links{
+    display:flex;
+    gap:.25rem;
+    flex:1;
+  }
+  .nav-links a{
+    padding:.45rem .8rem;
+    border-radius:.55rem;
+    color:var(--on-background);
+    text-decoration:none;
+    font-weight:500;
+    font-size:.95rem;
+  }
+  .nav-links a:hover{
+    color:var(--secondary);
+    background:var(--surface-container-high);
+  }
+  .nav-actions{
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    margin-inline-start:auto;
+  }
+  .icon-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:2.5rem;
+    height:2.5rem;
+    padding:0;
+    border-radius:50%;
+    background:var(--surface-container-high);
+    color:var(--on-background);
+  }
+  .nav-cta{
+    white-space:nowrap;
+  }
+  #theme-toggle .bx-sun{
+    display:none;
+  }
+  .dark #theme-toggle .bx-sun{
+    display:inline-flex;
+  }
+  .dark #theme-toggle .bx-moon{
+    display:none;
+  }
+  #menu-toggle .bx-x{
+    display:none;
+  }
+  #menu-toggle.open .bx-menu{
+    display:none;
+  }
+  #menu-toggle.open .bx-x{
+    display:inline-flex;
+  }
+  #menu-toggle{
+    display:inline-flex;
+  }
+  .wordmark{
+    display:none;
+    align-items:center;
+    gap:.5rem;
+    font-weight:800;
+    font-size:1.3rem;
+    color:var(--primary);
+    letter-spacing:.01em;
+  }
+  .wordmark svg{
+    width:1.9rem;
+    height:1.9rem;
+    flex:none;
+  }
+  .wordmark .mark-tail{
+    color:var(--secondary);
+  }
+  .no-logo .wordmark{
+    display:inline-flex;
+  }
+  .no-logo .small-logo, .no-logo .big-logo{
+    display:none !important;
+  }
+  .hero{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:2.5rem;
+    align-items:center;
+    padding:4rem 0 3rem;
+  }
+  .hero h1{
+    margin:.9rem 0 1rem;
+  }
+  .hero .lead{
+    font-size:1.1rem;
+    color:var(--on-surface-variant);
+    max-width:560px;
+  }
+  .hero-ctas{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.8rem;
+    margin:1.5rem 0 1.2rem;
+  }
+  .hero-mini-stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.5rem;
+  }
+  .hero-media{
+    position:relative;
+    border-radius:1.5rem;
+    overflow:hidden;
+    min-height:340px;
+    background-image:var(--net-pattern),linear-gradient(135deg,var(--primary) 0%,var(--secondary) 100%);
+    background-size:140px 140px,cover;
+    border:1px solid var(--outline-variant);
+  }
+  .hero-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity .7s ease;
+  }
+  .hero-media img.loaded{
+    opacity:1;
+  }
+  .float-chip{
+    position:absolute;
+    display:inline-flex;
+    align-items:center;
+    gap:.45rem;
+    background:var(--surface-container-low);
+    color:var(--on-background);
+    border:1px solid var(--outline-variant);
+    border-radius:999px;
+    padding:.45rem .9rem;
+    font-size:.85rem;
+    font-weight:600;
+    box-shadow:0 8px 24px rgba(0,0,0,.35);
+    z-index:3;
+  }
+  .fc-1{
+    top:1.1rem;
+    left:1.1rem;
+  }
+  .fc-2{
+    top:1.1rem;
+    right:1.1rem;
+    color:var(--secondary);
+  }
+  .fc-3{
+    bottom:1.1rem;
+    left:1.1rem;
+  }
+  .fc-4{
+    bottom:1.1rem;
+    right:1.1rem;
+  }
+  .fc-5{
+    top:45%;
+    left:50%;
+    transform:translate(-50%,-50%);
+  }
+  .hero-media::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(160deg,transparent 40%,rgba(0,0,0,.45));
+  }
+  .soon-banner{
+    display:flex;
+    align-items:center;
+    gap:.9rem;
+    flex-wrap:wrap;
+    background:var(--surface-container);
+    border:1px solid var(--outline-variant);
+    border-radius:1rem 2rem;
+    padding:1.1rem 1.4rem;
+    margin-top:2.2rem;
+  }
+  .soon-banner i.bx{
+    font-size:1.8rem;
+    color:var(--secondary);
+  }
+  .pulse-dot{
+    width:.6rem;
+    height:.6rem;
+    border-radius:50%;
+    background:var(--secondary);
+    box-shadow:0 0 0 0 var(--secondary);
+    animation:pulse 2s infinite;
+    flex:none;
+  }
+  .feature-card{
+    display:flex;
+    gap:.9rem;
+    align-items:flex-start;
+  }
+  .feature-card i.bx{
+    font-size:1.7rem;
+    color:var(--secondary);
+    flex:none;
+  }
+  .step-card{
+    text-align:center;
+    padding:1.3rem 1.1rem;
+  }
+  .step-card i.bx{
+    font-size:2.1rem;
+    color:var(--secondary);
+  }
+  .step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:1.7rem;
+    height:1.7rem;
+    border-radius:50%;
+    font-size:.85rem;
+    font-weight:700;
+    background:var(--primary);
+    color:#fff;
+    margin-bottom:.6rem;
+  }
+  #i5tgr5-3{
+    margin-bottom:1.6rem;
+  }
+  .privacy-banner{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    overflow:hidden;
+    border-radius:1.2rem 2.2rem;
+    background:var(--surface-container);
+    border:1px solid var(--outline-variant);
+    margin-top:1.6rem;
+  }
+  .privacy-banner .media{
+    position:relative;
+    min-height:260px;
+    background-image:var(--net-pattern),linear-gradient(135deg,var(--primary),var(--tertiary));
+    background-size:140px 140px,cover;
+  }
+  .privacy-banner .media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0;
+    transition:opacity .7s;
+  }
+  .privacy-banner .media img.loaded{
+    opacity:1;
+  }
+  .privacy-body{
+    padding:1.8rem;
+    display:flex;
+    flex-direction:column;
+    gap:.9rem;
+    justify-content:center;
+  }
+  .card-icon{
+    font-size:1.9rem;
+    color:var(--secondary);
+  }
+  .table-wrap{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .table-wrap .compare{
+    min-width:620px;
+  }
+  .compare{
+    width:100%;
+    max-width:100%;
+    border-collapse:collapse;
+    background:var(--surface-container-low);
+    border-radius:1rem;
+    overflow:hidden;
+  }
+  .compare th, .compare td{
+    padding:.8rem 1rem;
+    border-bottom:1px solid var(--outline-variant);
+    text-align:left;
+    font-size:.95rem;
+  }
+  .compare thead th{
+    background:var(--primary);
+    color:#fff;
+    font-weight:600;
+  }
+  .compare tbody th{
+    font-weight:600;
+    color:var(--on-background);
+  }
+  .compare .yes{
+    color:var(--secondary);
+    font-weight:600;
+  }
+  .compare .part{
+    color:var(--on-surface-variant);
+  }
+  .compare .no{
+    color:var(--error);
+  }
+  .compare td i.bx{
+    font-size:1.15rem;
+    vertical-align:-2px;
+  }
+  .stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:1rem;
+  }
+  #iok8sl-3{
+    margin-bottom:1rem;
+  }
+  .stat-card{
+    padding:1.2rem 1.1rem;
+    text-align:center;
+  }
+  .stat-number{
+    font-size:2rem;
+    font-weight:800;
+    color:var(--secondary);
+    line-height:1.1;
+  }
+  .stat-label{
+    font-size:.85rem;
+    color:var(--on-surface-variant);
+    margin-top:.3rem;
+  }
+  .stat-sub{
+    font-size:.72rem;
+    color:var(--outline);
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:1rem;
+    max-width:720px;
+    margin-inline:auto;
+  }
+  .contact-card{
+    display:flex;
+    align-items:center;
+    gap:.9rem;
+    padding:1.1rem 1.2rem;
+    text-decoration:none;
+    color:var(--on-background);
+    border:1px solid transparent;
+  }
+  .contact-card i.bx{
+    font-size:1.8rem;
+    color:var(--secondary);
+  }
+  .contact-card:hover{
+    border:1px solid var(--secondary);
+  }
+  .site-footer{
+    border-top:1px solid var(--outline-variant);
+    padding:2.4rem 0 2rem;
+    margin-top:3rem;
+  }
+  .footer-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+  }
+  .footer-note{
+    font-size:.85rem;
+    color:var(--on-surface-variant);
+  }
+  .footer-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1rem;
+    font-size:.85rem;
+  }
+  .footer-links a{
+    color:var(--on-surface-variant);
+    text-decoration:none;
+  }
+  .footer-links a:hover{
+    color:var(--secondary);
+  }
+  .chip.small{
+    min-height:1.75rem;
+  }
+  ::selection{
+    background:var(--secondary);
+    color:var(--background);
+  }
+  #iuq7q{
+    color:var(--secondary);
+  }
+  #i0ygjj{
+    color:var(--secondary);
+  }
+  #iu8m2w{
+    margin-top:.5rem;
+  }
+  #i0j4nk{
+    margin-top:1.2rem;
+  }
+  #iy40m1{
+    margin-top:1rem;
+  }
+  /* ---------- Feed demo (interactive) ---------- */
+  .feed-demo{
+    max-width:860px;
+    margin-inline:auto;
+    background:var(--surface-container);
+    border:1px solid var(--outline-variant);
+    border-radius:1.2rem 2rem;
+    padding:1.4rem;
+  }
+  .feed-demo-head{
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+    flex-wrap:wrap;
+    margin-bottom:1rem;
+  }
+  .feed-demo-head h3{
+    margin-right:auto;
+  }
+  .feed-filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:.5rem;
+    margin-bottom:1.1rem;
+  }
+  .feed-filters .chip{
+    cursor:pointer;
+    border:1px solid transparent;
+    user-select:none;
+  }
+  .feed-filters .chip.active{
+    background:var(--primary);
+    color:#fff;
+  }
+  .feed-items{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:.9rem;
+  }
+  .feed-item{
+    background:var(--surface-container-low);
+    border:1px solid var(--outline-variant);
+    border-radius:1rem;
+    padding:1rem;
+    display:flex;
+    flex-direction:column;
+    gap:.4rem;
+  }
+  .feed-item .fi-icon{
+    font-size:1.6rem;
+    color:var(--secondary);
+  }
+  .feed-item h5{
+    margin:0;
+    font-size:.95rem;
+    font-weight:700;
+  }
+  .feed-item p{
+    margin:0;
+    font-size:.8rem;
+    color:var(--on-surface-variant);
+  }
+  .feed-item .fi-tag{
+    margin-top:auto;
+    align-self:flex-start;
+    font-size:.68rem;
+    padding:.15rem .6rem;
+    min-height:0;
+  }
+  .feed-item.hidden{
+    display:none;
+  }
+  .feed-empty{
+    display:none;
+    text-align:center;
+    color:var(--on-surface-variant);
+    padding:1.5rem 0;
+  }
+  .feed-demo-note{
+    margin-top:1rem;
+    font-size:.8rem;
+    color:var(--outline);
+    text-align:center;
+  }
+  /* ---------- FAQ ---------- */
+  .faq{
+    max-width:720px;
+    margin-inline:auto;
+    display:flex;
+    flex-direction:column;
+    gap:.7rem;
+  }
+  .faq details{
+    background:var(--surface-container-low);
+    border:1px solid var(--outline-variant);
+    border-radius:1rem;
+    padding:1rem 1.3rem;
+  }
+  .faq summary{
+    cursor:pointer;
+    font-weight:700;
+    list-style:none;
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+  }
+  .faq summary::-webkit-details-marker{
+    display:none;
+  }
+  .faq summary i.bx{
+    color:var(--secondary);
+    transition:transform .25s;
+  }
+  .faq details[open] summary i.bx{
+    transform:rotate(90deg);
+  }
+  .faq details p{
+    margin:.7rem 0 0;
+    color:var(--on-surface-variant);
+  }
+  /* ---------- Notify form ---------- */
+  .notify-card{
+    max-width:560px;
+    margin:0 auto;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+    padding:1.8rem;
+  }
+  .notify-form{
+    display:flex;
+    gap:.6rem;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .notify-form input{
+    flex:1;
+    min-width:220px;
+    font:inherit;
+    color:var(--on-background);
+    background:var(--surface-container-high);
+    border:1px solid var(--outline-variant);
+    border-radius:.65rem;
+    padding:.6rem .9rem;
+  }
+  .notify-form input:focus{
+    outline:2px solid var(--secondary);
+    outline-offset:1px;
+  }
+  .notify-success{
+    display:none;
+    align-items:center;
+    gap:.5rem;
+    justify-content:center;
+    color:var(--secondary);
+    font-weight:600;
+  }
+  .notify-error{
+    display:none;
+    color:var(--error);
+    font-size:.85rem;
+  }
+  /* ---------- Back to top ---------- */
+  #back-to-top{
+    position:fixed;
+    bottom:1.4rem;
+    right:1.4rem;
+    z-index:48;
+    width:2.8rem;
+    height:2.8rem;
+    border-radius:50%;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s;
+  }
+  #back-to-top.visible{
+    opacity:1;
+    pointer-events:auto;
+  }
+  @keyframes fadeOutLeft{
+    from{
+      opacity:1;
+    }
+    to{
+      opacity:0;
+      transform:translate3d(-100%,0,0);
+    }
+  }
+  @keyframes fadeInRight{
+    from{
+      opacity:0;
+      transform:translate3d(100%,0,0);
+    }
+    to{
+      opacity:1;
+      transform:none;
+    }
+  }
+  @keyframes flash{
+    from, 50%, to{
+      opacity:1;
+    }
+    25%, 75%{
+      opacity:0;
+    }
+  }
+  @keyframes pulse{
+    0%{
+      box-shadow:0 0 0 0 rgba(32,185,147,.6);
+    }
+    70%{
+      box-shadow:0 0 0 .7rem rgba(32,185,147,0);
+    }
+    100%{
+      box-shadow:0 0 0 0 rgba(32,185,147,0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .fade-me-in{
+      transition:none;
+    }
+    .pulse-dot{
+      animation:none;
+    }
+  }
+  @media (max-width:960px){
+    .grid-3{
+      grid-template-columns:1fr 1fr;
+    }
+    .grid-4{
+      grid-template-columns:1fr 1fr;
+    }
+  }
+  @media (min-width:901px){
+    #menu-toggle{
+      display:none;
+    }
+  }
+  @media (max-width:900px){
+    .nav-links{
+      display:none;
+    }
+    .nav-cta{
+      display:none;
+    }
+    .hero{
+      grid-template-columns:1fr;
+      padding-top:2.5rem;
+    }
+  }
+  @media (max-width:800px){
+    .privacy-banner{
+      grid-template-columns:1fr;
+    }
+  }
+  @media (max-width:700px){
+    .compare{
+      font-size:.8rem;
+    }
+    .compare th, .compare td{
+      padding:.55rem .5rem;
+    }
+  }
+  @media (max-width:640px){
+    .grid-3{
+      grid-template-columns:1fr;
+    }
+    .grid-4{
+      grid-template-columns:1fr;
+    }
+    h1{
+      font-size:2.1rem;
+    }
+    .hero{
+      padding-top:2.2rem;
+    }
+    .fc-5{
+      display:none;
+    }
+    .float-chip{
+      font-size:.72rem;
+      padding:.35rem .6rem;
+    }
+  }
+  </style>
+</head>
+<body id="i0ca">
+  <!-- Top navigation -->
+  <nav class="site-nav">
+    <img src="/static/logos/page/logodarkcompact.webp" alt="" aria-hidden="true" class="logo-img"/>
+    <a href="#top" aria-label="Delisuggest home" class="brand"><img alt="Delisuggest" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImZpbGw6IHJnYmEoMCwwLDAsMC4xNSk7IHRyYW5zZm9ybTogc2NhbGUoMC43NSkiPgogICAgICAgIDxwYXRoIGQ9Ik04LjUgMTMuNWwyLjUgMyAzLjUtNC41IDQuNSA2SDVtMTYgMVY1YTIgMiAwIDAgMC0yLTJINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMnoiPjwvcGF0aD4KICAgICAgPC9zdmc+" class="small-logo"/><span aria-hidden="false" class="wordmark"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Delisuggest mark">
+      <rect width="64" height="64" rx="16" fill="var(--primary)">
+      </rect>
+      <path d="M18 16h14c9.9 0 18 7.2 18 16s-8.1 16-18 16H18V16zm7 6.6v18.8h7c5.8 0 10.5-4.2 10.5-9.4S37.8 22.6 32 22.6h-7z" fill="#ffffff">
+      </path>
+      </svg><span class="wordmark-text">Deli<span class="mark-tail">suggest</span></span></span></a>
+    <div class="max">
+    </div>
+    <div class="nav-links">
+      <a href="#whats-coming">What's coming</a>
+      <a href="#demo">Feed preview</a>
+      <a href="#faq">FAQ</a>
+      <a href="#notify">Stay in the loop</a>
+    </div>
+    <div class="nav-actions">
+      <button type="button" id="theme-toggle" aria-label="Toggle dark / light theme" class="icon-btn"><i class="bx bx-moon"></i><i class="bx bx-sun"></i></button>
+      <a href="https://t.me/deliravi" target="_blank" rel="noopener" class="button primary small nav-cta">Follow the build</a>
+      <button type="button" id="menu-toggle" aria-label="Open menu" aria-expanded="false" class="icon-btn"><i class="bx bx-menu"></i><i class="bx bx-x"></i></button>
+    </div>
+  </nav>
+  <!-- Hidden menu (mobile) -->
+  <div id="hiddenmenu">
+    <a href="#whats-coming">What's coming</a>
+    <a href="#demo">Feed preview</a>
+    <a href="#faq">FAQ</a>
+    <a href="#notify">Stay in the loop</a>
+    <a href="https://t.me/deliravi" target="_blank" rel="noopener" class="button primary">Follow the build</a>
+  </div>
+  <div id="top" class="page-main">
+    <!-- ==================== HERO ==================== -->
+    <div class="container">
+      <section id="hero" class="hero">
+        <div class="fade-me-in">
+          <div class="chip primary">
+            <i class="bx bx-rocket">
+            </i>A Deliravi product · In development
+          </div>
+          <h1>Delisuggest is
+            <span id="iuq7q">coming soon.</span>
+          </h1>
+          <p class="lead">
+            Deliravi's first product: a format-independent feed that learns
+            <em>who you are</em> — not just what you clicked. Deep personalization,
+            hardcore data protection, and suggestions in any format: documents, files,
+            apps, media, even YouTube and Spotify embeds.
+          </p>
+          <div class="hero-ctas">
+            <a href="#notify" class="button primary">Get notified<i class="bx bx-right-arrow-alt">
+              </i></a>
+            <a href="#whats-coming" class="button border">What's coming</a>
+          </div>
+          <div class="hero-mini-stats">
+            <div class="chip">
+              <i class="bx bx-brain">
+              </i>Deep personalization
+            </div>
+            <div class="chip">
+              <i class="bx bx-lock-alt">
+              </i>Hardcore data protection
+            </div>
+            <div class="chip">
+              <i class="bx bx-film">
+              </i>Any format
+            </div>
+          </div>
+        </div>
+        <div id="iupqg" class="hero-media fade-me-in">
+          <img src="https://cdn.pixabay.com/photo/2024/05/26/12/03/ai-generated-8788658_640.jpg" alt="Abstract green digital technology background" loading="lazy"/>
+          <span id="i5orm" class="float-chip fc-1"><i id="i8si1j" class="bx bx-file-blank">
+            </i>Any format</span>
+          <span id="ig0ev" class="float-chip fc-2"><i class="bx bx-grid-alt">
+            </i>Any content</span>
+          <span id="iny46" class="float-chip fc-3"><i id="i9nqji" class="bx bxl-youtube">
+            </i>Any sources</span>
+          <span id="iinpj" class="float-chip fc-4"><i id="iyh1b" class="bx bxl-spotify">
+            </i> Anything</span>
+          <span class="float-chip fc-5"><i class="bx bx-chip">
+            </i>AIPools</span>
+        </div>
+      </section>
+      <div class="soon-banner fade-me-in" id="istimt">
+        <span aria-hidden="true" class="pulse-dot"></span>
+        <i class="bx bx-time-five">
+        </i>
+        <span class="muted">We're building in the open. No launch dates — we ship when it's ready.
+          Follow <a href="https://t.me/deliravi" target="_blank" rel="noopener" id="i0ygjj">t.me/deliravi</a>
+          to watch it come together.</span>
+      </div>
+    </div>
+    <!-- ==================== WHAT'S COMING ==================== -->
+    <div id="whats-coming" class="container section fade-me-in">
+      <div class="section-head" id="i0h05u">
+        <div class="chip">
+          <i class="bx bx-rocket">
+          </i>What's coming
+        </div>
+        <h2 id="if0dys">A feed built around you
+        </h2>
+        <p class="muted">Delisuggest is in active development. Here's what the first release is shaping up to be.
+        </p>
+      </div>
+      <div class="grid-4">
+        <div class="card feature-card">
+          <i class="bx bx-brain">
+          </i>
+          <div>
+            <h4>Psychological portrait
+            </h4>
+            <p class="muted">A deep psychological image of you — not a click history — powers every suggestion.
+            </p>
+          </div>
+        </div>
+        <div class="card feature-card">
+          <i class="bx bx-chip">
+          </i>
+          <div>
+            <h4>AIPool Maker
+            </h4>
+            <p class="muted">Build your own feed exactly the way you want it — full freedom and control.
+            </p>
+          </div>
+        </div>
+        <div class="card feature-card">
+          <i class="bx bx-filter">
+          </i>
+          <div>
+            <h4>Dynamic filters
+            </h4>
+            <p class="muted">Define your current needs — any format, from documents to platform embeds.
+            </p>
+          </div>
+        </div>
+        <div class="card feature-card">
+          <i class="bx bx-key">
+          </i>
+          <div>
+            <h4>Encryption key
+            </h4>
+            <p class="muted">Your data is encrypted with a key that belongs to you — not to us.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== HOW IT WORKS ==================== -->
+    <div id="delisuggest" class="container section fade-me-in">
+      <div class="section-head">
+        <div class="chip primary">
+          <i class="bx bx-star">
+          </i>How it will work
+        </div>
+        <h2>Four steps to a feed that gets you
+        </h2>
+        <p class="muted">
+          A format-independent feed that unifies fragmented content,
+          saves your time and protects your data — based on a psychological image of you,
+          locked with your own encryption key.
+        </p>
+      </div>
+      <div id="i5tgr5-3" class="grid-4">
+        <div class="card step-card">
+          <span class="step-num">1</span>
+          <i class="bx bx-brain">
+          </i>
+          <h4>Take the portrait test
+          </h4>
+          <p id="iglez74" class="muted">A deep psychological image of you — not a click history.
+          </p>
+        </div>
+        <div class="card step-card">
+          <span class="step-num">2</span>
+          <i class="bx bx-chip">
+          </i>
+          <h4>The algorithm builds your profile
+          </h4>
+          <p class="muted">Classical math does the scoring; language models only present the result — predictable, no hallucinations.
+          </p>
+        </div>
+        <div class="card step-card">
+          <span class="step-num">3</span>
+          <i class="bx bx-film">
+          </i>
+          <h4>Get your feed
+          </h4>
+          <p class="muted">Documents, files, apps, media and platform-specific embeds — one place, filters you control.
+          </p>
+        </div>
+        <div class="card step-card">
+          <span class="step-num">4</span>
+          <i class="bx bx-star">
+          </i>
+          <h4>Rate and refine
+          </h4>
+          <p id="ixjvvoq" class="muted">Discover things you'd never think to search for — each feed pushes you slightly past what you already know, toward what you could become.
+          </p>
+        </div>
+      </div>
+      <div id="i59pfh" class="grid-3">
+        <div class="card feature-card">
+          <i class="bx bx-chip">
+          </i>
+          <div>
+            <h4>AIPool Maker
+            </h4>
+            <p class="muted">Build your own feed exactly the way you want it — full freedom and control.
+            </p>
+          </div>
+        </div>
+        <div class="card feature-card">
+          <i class="bx bx-trending-up">
+          </i>
+          <div>
+            <h4>AIPool Market
+            </h4>
+            <p id="iivldd" class="muted">Publish, sell and install community pools.
+            </p>
+          </div>
+        </div>
+        <div id="if44xg" class="card feature-card">
+          <i class="bx bx-filter">
+          </i>
+          <div>
+            <h4>Dynamic filters
+            </h4>
+            <p class="muted">Define your current needs — not just your past views.
+            </p>
+          </div>
+        </div>
+        <div class="card feature-card">
+          <i class="bx bx-key">
+          </i>
+          <div>
+            <h4>Encryption key
+            </h4>
+            <p class="muted">Your data is encrypted with a key that belongs to you — not to us.
+            </p>
+          </div>
+        </div>
+        <div class="card feature-card">
+          <i id="ia08cd" class="bx bx-book-heart">
+          </i>
+          <div>
+            <h4>Courses for organizations
+            </h4>
+            <p class="muted">Adaptive educational feeds for B2B, with QR-based access and dynamic pricing.
+            </p>
+          </div>
+        </div>
+        <div class="card feature-card">
+          <i class="bx bx-heart">
+          </i>
+          <div>
+            <h4>Community-driven
+            </h4>
+            <p class="muted">Share your portrait results and compare with friends — 35 of 60 early testers did.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="iaifmc-3" class="privacy-banner">
+        <div class="media">
+          <img src="https://cdn.pixabay.com/photo/2016/08/13/16/49/computer-1591018_1280.jpg" alt="Padlock over a laptop keyboard — data protection" loading="lazy"/>
+        </div>
+        <div class="privacy-body">
+          <h3>
+            <i class="bx bx-lock-alt card-icon">
+            </i>Privacy is not a feature. It's the foundation.
+          </h3>
+          <p class="muted">
+            81% of US adults are concerned about their data, and 49% of 25–34-year-olds have already
+            switched services because of data misuse (Cisco, 2025). In Delisuggest, registration
+            requires minimal data plus your own encryption key — the connection between you and your
+            recommendations stays yours.
+          </p>
+          <div class="section-chip-row">
+            <div class="chip">
+              <i class="bx bx-key">
+              </i>Your key, your data
+            </div>
+            <div class="chip">
+              <i class="bx bx-shield">
+              </i>Anonymized ratings only
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== FEED PREVIEW (interactive demo) ==================== -->
+    <div id="demo" class="container section fade-me-in">
+      <div class="section-head">
+        <div class="chip">
+          <i class="bx bx-grid-alt">
+          </i>Feed preview
+        </div>
+        <h2>Try the concept — one feed, any format
+        </h2>
+        <p class="muted">A taste of how Delisuggest mixes formats in a single feed. Tap the filters — in the real product, they're driven by your portrait and your current needs.</p>
+      </div>
+      <div class="feed-demo">
+        <div class="feed-demo-head">
+          <h3><i class="bx bx-film card-icon"></i>Your feed</h3>
+          <span class="chip small"><i class="bx bx-brain"></i>Portrait: explorer</span>
+        </div>
+        <div class="feed-filters" id="feed-filters">
+          <span class="chip active" data-filter="all"><i class="bx bx-grid-alt"></i>All</span>
+          <span class="chip" data-filter="doc"><i class="bx bx-file-blank"></i>Documents</span>
+          <span class="chip" data-filter="video"><i class="bx bxl-youtube"></i>Video</span>
+          <span class="chip" data-filter="music"><i class="bx bxl-spotify"></i>Music</span>
+          <span class="chip" data-filter="app"><i class="bx bx-chip"></i>Apps</span>
+        </div>
+        <div class="feed-items" id="feed-items">
+          <div class="feed-item" data-type="doc">
+            <i class="bx bx-file-blank fi-icon"></i>
+            <h5>Deep Work, annotated</h5>
+            <p>A reading pack matched to your focus goals this month.</p>
+            <span class="chip small fi-tag">Document</span>
+          </div>
+          <div class="feed-item" data-type="video">
+            <i class="bx bxl-youtube fi-icon"></i>
+            <h5>The psychology of mastery</h5>
+            <p>A 22-min talk just past what you already know.</p>
+            <span class="chip small fi-tag">YouTube embed</span>
+          </div>
+          <div class="feed-item" data-type="music">
+            <i class="bx bxl-spotify fi-icon"></i>
+            <h5>Deep-focus playlist</h5>
+            <p>Instrumental picks tuned to your study rhythm.</p>
+            <span class="chip small fi-tag">Spotify embed</span>
+          </div>
+          <div class="feed-item" data-type="app">
+            <i class="bx bx-chip fi-icon"></i>
+            <h5>Spaced-repetition tool</h5>
+            <p>An app suggestion based on how you retain best.</p>
+            <span class="chip small fi-tag">App</span>
+          </div>
+          <div class="feed-item" data-type="doc">
+            <i class="bx bx-file-blank fi-icon"></i>
+            <h5>Beginner's guide to systems thinking</h5>
+            <p>One step beyond your current reading list.</p>
+            <span class="chip small fi-tag">Document</span>
+          </div>
+          <div class="feed-item" data-type="video">
+            <i class="bx bxl-youtube fi-icon"></i>
+            <h5>How memory actually works</h5>
+            <p>Chosen by your portrait, not your watch history.</p>
+            <span class="chip small fi-tag">YouTube embed</span>
+          </div>
+        </div>
+        <div class="feed-empty" id="feed-empty">Nothing in this format yet — in the real feed, filters adapt to you.</div>
+        <p class="feed-demo-note">This is a static preview. The real feed learns from your portrait test and your ratings.</p>
+      </div>
+    </div>
+    <!-- ==================== WHY ==================== -->
+    <div id="why" class="container section fade-me-in">
+      <div class="section-head">
+        <div class="chip">
+          <i class="bx bx-check-circle">
+          </i>Why us
+        </div>
+        <h2>Why not just use a chatbot — or a taste app?
+        </h2>
+        <p class="muted">
+          Users spend an average of 14 minutes searching for something to watch, 19% abandon the
+          search and 49% consider giving up streaming (Gracenote). Existing tools solve only part of
+          the problem.
+        </p>
+      </div>
+      <div class="table-wrap">
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>
+              </th>
+              <th>Delisuggest
+              </th>
+              <th>Chatbots
+              </th>
+              <th>Taste apps
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>One feed, any format
+              </th>
+              <td class="yes">
+                <i class="bx bx-check-circle">
+                </i> Documents, files, apps, media, embeds
+              </td>
+              <td class="part">
+                <i class="bx bx-x">
+                </i> Partial
+              </td>
+              <td class="part">
+                <i class="bx bx-x">
+                </i> Limited catalogs
+              </td>
+            </tr>
+            <tr>
+              <th>Personalization via psychological portrait
+              </th>
+              <td class="yes">
+                <i class="bx bx-check-circle">
+                </i> Core mechanism
+              </td>
+              <td class="no">
+                <i class="bx bx-x">
+                </i> Weak personalization
+              </td>
+              <td class="no">
+                <i class="bx bx-x">
+                </i> Based on past views
+              </td>
+            </tr>
+            <tr>
+              <th>Encrypted data &amp; user control
+              </th>
+              <td class="yes">
+                <i class="bx bx-check-circle">
+                </i> Your key, your data
+              </td>
+              <td class="part">
+                <i class="bx bx-x">
+                </i> Partial
+              </td>
+              <td class="part">
+                <i class="bx bx-x">
+                </i> Partial
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" id="iy40m1">
+        None of the studied solutions — chatbots like ChatGPT, Gemini, Claude and Lumo, or taste
+        apps like TasteRay, Taste, Goodreads and Swipeify — combine all three at once. And copying
+        the code isn't enough: the advantage lives in the accumulated, specially structured data
+        and the learning process built on it.
+      </p>
+    </div>
+    <!-- ==================== NUMBERS ==================== -->
+    <div id="numbers" class="container section fade-me-in">
+      <div class="section-head">
+        <div class="chip">
+          <i class="bx bx-line-chart">
+          </i>The space we grow in
+        </div>
+        <h2 id="ixl7mi-3">The problem is big — and we're testing the answer
+        </h2>
+      </div>
+      <div id="iok8sl-3" class="stats-grid">
+        <div id="ida01b-3" class="card stat-card">
+          <div class="stat-number">$7.4B → $28.6B
+          </div>
+          <div class="stat-label">streaming personalization market, 2025 → 2034
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-number">14 min
+          </div>
+          <div class="stat-label">average time users spend searching for content
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-number">19%
+          </div>
+          <div class="stat-label">abandon the search entirely
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-number">49%
+          </div>
+          <div class="stat-label">consider giving up streaming altogether
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-number">81%
+          </div>
+          <div class="stat-label">of US adults are concerned about their data
+          </div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="card stat-card">
+          <div class="stat-number">60
+          </div>
+          <div class="stat-label">portrait test participants
+          </div>
+          <div class="stat-sub">avg. score 7.5/10
+          </div>
+        </div>
+        <div id="iap2hg-3" class="card stat-card">
+          <div class="stat-number">20
+          </div>
+          <div class="stat-label">closed beta algorithm testers
+          </div>
+          <div class="stat-sub">40 suggestions each
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-number">8.5/10
+          </div>
+          <div class="stat-label">average rating after stage two
+          </div>
+          <div class="stat-sub">16 of 20 suggestions rated good
+          </div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-number">35
+          </div>
+          <div class="stat-label">testers shared their results
+          </div>
+          <div class="stat-sub">organic growth hypothesis confirmed
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== FAQ ==================== -->
+    <div id="faq" class="container section fade-me-in">
+      <div class="section-head">
+        <div class="chip">
+          <i class="bx bx-envelope">
+          </i>FAQ
+        </div>
+        <h2>Questions people ask us
+        </h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary><i class="bx bx-right-arrow-alt"></i>When does Delisuggest launch?</summary>
+          <p>No fixed dates — we ship when it's ready. The closed beta is running with a small group; follow t.me/deliravi to hear about wider access first.</p>
+        </details>
+        <details>
+          <summary><i class="bx bx-right-arrow-alt"></i>What does "format-independent" actually mean?</summary>
+          <p>One feed holds documents, files, apps, regular media and platform-specific embeds like YouTube or Spotify. You don't switch between apps — the feed adapts to the format that fits your current need.</p>
+        </details>
+        <details>
+          <summary><i class="bx bx-right-arrow-alt"></i>How is my data protected?</summary>
+          <p>Registration asks for minimal data, and your recommendations are encrypted with a key that belongs to you — not to us. Ratings shared for community features are anonymized.</p>
+        </details>
+        <details>
+          <summary><i class="bx bx-right-arrow-alt"></i>What is an AIPool?</summary>
+          <p>A community-built feed recipe. Create your own with the AIPool Maker, or install pools from other users in the AIPool Market — full control, always.</p>
+        </details>
+        <details>
+          <summary><i class="bx bx-right-arrow-alt"></i>Can my organization use it?</summary>
+          <p>Yes — adaptive educational feeds for B2B are planned, with QR-based access and dynamic pricing. Reach out via Telegram or email to talk about a pilot.</p>
+        </details>
+      </div>
+    </div>
+    <!-- ==================== STAY IN THE LOOP ==================== -->
+    <div id="notify" class="container section fade-me-in">
+      <div class="section-head">
+        <div class="chip">
+          <i class="bx bx-envelope">
+          </i>Stay in the loop
+        </div>
+        <h2>Want to know the moment it's live?
+        </h2>
+        <p class="muted">Reach out, tell us about your taste, and be among the first to test Delisuggest.
+        </p>
+      </div>
+      <div class="contact-grid" style="margin-top:1.5rem">
+        <a href="https://t.me/deliravi" target="_blank" rel="noopener" class="card contact-card"><i class="bx bxl-telegram">
+          </i><div>
+          <h4>Telegram
+          </h4>
+          <span class="muted">t.me/deliravi — channel &amp; chat</span>
+          </div></a>
+        <a href="https://www.reddit.com/r/deliravi/" target="_blank" rel="noopener" class="card contact-card"><i class="bx bxl-reddit">
+          </i><div>
+          <h4>Reddit
+          </h4>
+          <span class="muted">r/deliravi — community &amp; feedback</span>
+          </div></a>
+      </div>
+    </div>
+  </div>
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="site-footer">
+    <div class="container footer-row">
+      <div>
+        <a href="#top" class="brand"><img alt="Delisuggest" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgc3R5bGU9ImZpbGw6IHJnYmEoMCwwLDAsMC4xNSk7IHRyYW5zZm9ybTogc2NhbGUoMC43NSkiPgogICAgICAgIDxwYXRoIGQ9Ik04LjUgMTMuNWwyLjUgMyAzLjUtNC41IDQuNSA2SDVtMTYgMVY1YTIgMiAwIDAgMC0yLTJINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMnoiPjwvcGF0aD4KICAgICAgPC9zdmc+" class="small-logo"/><span class="wordmark"><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Delisuggest mark">
+          <rect width="64" height="64" rx="16" fill="var(--primary)">
+          </rect>
+          <path d="M18 16h14c9.9 0 18 7.2 18 16s-8.1 16-18 16H18V16zm7 6.6v18.8h7c5.8 0 10.5-4.2 10.5-9.4S37.8 22.6 32 22.6h-7z" fill="#ffffff">
+          </path>
+          </svg><span class="wordmark-text">Deli<span class="mark-tail">suggest</span></span></span></a>
+        <p id="iu8m2w" class="footer-note">
+          <strong>“Self-overcome like a madman.”</strong>
+          <br/>Delisuggest is a product of Deliravi — the company behind DeliAds and the products to come.
+        </p>
+      </div>
+      <div class="footer-links">
+        <a href="https://t.me/deliravi" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://www.reddit.com/r/deliravi/" target="_blank" rel="noopener">Reddit</a>
+    </div>
+    <div id="i0j4nk" class="container footer-row">
+      <span class="footer-note">© 2026 Deliravi. All rights reserved.</span>
+      <span class="footer-note">Built with BeerCSS · Icons by Boxicons · Photo from Pixabay</span>
+    </div>
+  </footer>
+  <button type="button" id="back-to-top" class="button primary" aria-label="Back to top"><i class="bx bx-up-arrow-alt"></i></button>
+  <script>
+    (function(){
+      "use strict";
+      /* ---------- Theme toggle (with view-transition "flash" when supported) ----------
+         Theme lives on <html> so it works with the head startup script;
+         choice is remembered in localStorage; dark is the default. */
+      var themeBtn = document.getElementById('theme-toggle');
+      themeBtn.addEventListener('click', function(){
+        var toDark = !document.documentElement.classList.contains('dark');
+        var apply = function(){
+          document.documentElement.classList.toggle('dark', toDark);
+          document.documentElement.classList.toggle('light', !toDark);
+          try {
+            localStorage.setItem('deliravi-theme', toDark ? 'dark' : 'light');
+          }
+          catch(e){
+          }
+        };
+        if (document.startViewTransition){
+          document.documentElement.dataset.transition = 'flash';
+          var t = document.startViewTransition(apply);
+          if (t && t.finished) t.finished.then(function(){
+            delete document.documentElement.dataset.transition;
+          })
+            .catch(function(){
+            delete document.documentElement.dataset.transition;
+          });
+        }
+        else {
+          apply();
+        }
+      });
+      /* ---------- Hidden menu (#hiddenmenu.active) ---------- */
+      var menuBtn = document.getElementById('menu-toggle');
+      var hiddenMenu = document.getElementById('hiddenmenu');
+      function closeMenu(){
+        hiddenMenu.classList.remove('active');
+        menuBtn.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
+      menuBtn.addEventListener('click', function(){
+        var open = hiddenMenu.classList.toggle('active');
+        menuBtn.classList.toggle('open', open);
+        menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      hiddenMenu.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', closeMenu);
+      });
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') closeMenu();
+      });
+      document.addEventListener('click', function(e){
+        if (hiddenMenu.classList.contains('active') &&
+            !hiddenMenu.contains(e.target) && !menuBtn.contains(e.target)) closeMenu();
+      });
+      /* ---------- Fade-in on scroll (.fade-me-in) ---------- */
+      var fadables = document.querySelectorAll('.fade-me-in');
+      if ('IntersectionObserver' in window){
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if (e.isIntersecting){
+              e.target.classList.remove('pre');
+              io.unobserve(e.target);
+            }
+          });
+        }, {
+          threshold: 0.12 });
+        requestAnimationFrame(function(){
+          var vh = window.innerHeight || document.documentElement.clientHeight;
+          fadables.forEach(function(el){
+            var r = el.getBoundingClientRect();
+            var inView = r.top < vh && r.bottom > 0;
+            if (!inView) el.classList.add('pre');
+          });
+          fadables.forEach(function(el){
+            io.observe(el);
+          });
+        });
+      }
+      /* ---------- Images: fade in on load, hide on error (pattern shows) ---------- */
+      document.querySelectorAll('.hero-media img, .privacy-banner .media img').forEach(function(img){
+        var done = function(){
+          img.classList.add('loaded');
+        };
+        if (img.complete && img.naturalWidth > 0) done();
+        else img.addEventListener('load', done);
+        img.addEventListener('error', function(){
+          img.style.display = 'none';
+        });
+      });
+      /* ---------- Logo fallback: if /static logos are missing, show the wordmark ---------- */
+      var probe = document.querySelector('img.logo-img');
+      if (probe){
+        var fail = function(){
+          document.documentElement.classList.add('no-logo');
+        };
+        if (probe.complete && probe.naturalWidth === 0) fail();
+        else probe.addEventListener('error', fail);
+      }
+      /* ---------- Feed demo: working format filters ---------- */
+      var filterWrap = document.getElementById('feed-filters');
+      var feedItems = document.querySelectorAll('#feed-items .feed-item');
+      var feedEmpty = document.getElementById('feed-empty');
+      if (filterWrap){
+        filterWrap.querySelectorAll('[data-filter]').forEach(function(chip){
+          chip.addEventListener('click', function(){
+            filterWrap.querySelectorAll('[data-filter]').forEach(function(c){
+              c.classList.remove('active');
+            });
+            chip.classList.add('active');
+            var f = chip.getAttribute('data-filter');
+            var visible = 0;
+            feedItems.forEach(function(item){
+              var show = (f === 'all' || item.getAttribute('data-type') === f);
+              item.classList.toggle('hidden', !show);
+              if (show) visible++;
+            });
+            feedEmpty.style.display = visible ? 'none' : 'block';
+          });
+        });
+      }
+      /* ---------- Notify form (demo: saves locally, shows success) ---------- */
+      var form = document.getElementById('notify-form');
+      var emailInput = document.getElementById('notify-email');
+      var okMsg = document.getElementById('notify-success');
+      var errMsg = document.getElementById('notify-error');
+      if (form){
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          var v = (emailInput.value || '').trim();
+          var valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+          okMsg.style.display = 'none';
+          errMsg.style.display = 'none';
+          if (!valid){
+            errMsg.style.display = 'block';
+            emailInput.focus();
+            return;
+          }
+          try {
+            localStorage.setItem('delisuggest-notify', v);
+          }
+          catch(err){
+          }
+          okMsg.style.display = 'flex';
+          form.reset();
+        });
+      }
+      /* ---------- Back to top ---------- */
+      var btt = document.getElementById('back-to-top');
+      window.addEventListener('scroll', function(){
+        btt.classList.toggle('visible', window.scrollY > 600);
+      }, {
+        passive: true });
+      btt.addEventListener('click', function(){
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth' });
+      });
+      /* ---------- Boxicons offline fallback: inline SVG when the icon font is blocked ---------- */
+      var ICONS = {
+        'bx-menu': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>',
+        'bx-x': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+        'bx-moon': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
+        'bx-sun': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+        'bx-right-arrow-alt': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>',
+        'bx-up-arrow-alt': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5m-6 6 6-6 6 6"/></svg>',
+        'bx-rocket': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c4 1 7 5 7 10l-4 3h-6l-4-3c0-5 3-9 7-10z"/><circle cx="12" cy="10" r="2"/><path d="M9 16l-2 5 5-2 5 2-2-5"/></svg>',
+        'bx-film': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4m10 0h4M3 15h4m10 0h4"/></svg>',
+        'bx-file-blank': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 2h7l5 5v15H7z"/><path d="M14 2v5h5"/></svg>',
+        'bx-brain': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 3 3h3V3zM15 3a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-3 3h-3V3z"/></svg>',
+        'bx-chip': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M4 9h3M4 15h3M17 9h3M17 15h3M9 4v3M15 4v3M9 17v3M15 17v3"/></svg>',
+        'bx-star': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg>',
+        'bx-time-five': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>',
+        'bx-check-circle': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5 5.5-5.5"/></svg>',
+        'bx-lock-alt': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+        'bx-key': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12 21 2m-4 2 3 3m-6 0 3 3"/></svg>',
+        'bx-shield': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/></svg>',
+        'bx-filter': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6 8v6l-4-2v-4z"/></svg>',
+        'bx-envelope': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+        'bx-grid-alt': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></svg>',
+        'bx-trending-up': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>',
+        'bx-line-chart': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5m0 14h16M8 15l3.5-4 3 2L18 8"/></svg>',
+        'bx-heart': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.5-9-9c-1.2-2.7.7-6 4-6 2 0 3.5 1.2 5 3 1.5-1.8 3-3 5-3 3.3 0 5.2 3.3 4 6-2 4.5-9 9-9 9z"/></svg>',
+        'bx-book-heart': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 6c-2-1.6-4.5-2-8-2v14c3.5 0 6 .4 8 2 2-1.6 4.5-2 8-2V4c-3.5 0-6 .4-8 2v14"/><path d="M12 10.5s-2-1.4-2-2.7c0-.8.6-1.3 1.3-1.3.4 0 .6.2.7.4.1-.2.3-.4.7-.4.7 0 1.3.5 1.3 1.3 0 1.3-2 2.7-2 2.7z"/></svg>',
+        'bxl-youtube': '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.9-.5-5.8a3 3 0 0 0-2.1-2.1C18.5 3.5 12 3.5 12 3.5s-6.5 0-8.4.6A3 3 0 0 0 1.5 6.2C1 8.1 1 12 1 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 8.4.6 8.4.6s6.5 0 8.4-.6a3 3 0 0 0 2.1-2.1C23 15.9 23 12 23 12zM9.8 15.5v-7l6.2 3.5-6.2 3.5z"/></svg>',
+        'bxl-spotify': '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.4c-.2.3-.6.4-.9.2-2.5-1.5-5.6-1.9-9.3-1.1-.4.1-.7-.1-.8-.5-.1-.4.1-.7.5-.8 4-.9 7.5-.5 10.3 1.2.3.2.4.6.2 1zm1.2-2.8c-.2.3-.7.5-1 .3-2.8-1.7-7.1-2.2-10.4-1.2-.4.1-.9-.1-1-.6-.1-.4.1-.9.6-1 3.8-1.1 8.5-.6 11.7 1.4.3.2.4.7.1 1.1zm.1-2.9C14.5 8.7 8.9 8.5 5.7 9.5c-.5.2-1.1-.1-1.3-.7-.2-.5.1-1.1.7-1.3 3.7-1.1 10-.9 13.9 1.5.5.3.7 1 .4 1.5-.3.4-.9.6-1.5.3z"/></svg>',
+        'bxl-telegram': '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.6 19 19.3c-.2 1-.8 1.2-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.9.4l.3-4.6L18.6 7c.4-.3-.1-.5-.6-.2L7.7 13.2l-4.4-1.4c-1-.3-1-1 .2-1.4l17.2-6.6c.8-.3 1.5.2 1.2 1.4z"/></svg>',
+        'bxl-reddit': '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 9.8 6.4c-.6-.2-1.3-.3-2-.3C4.9 6.1 2 8.7 2 11.9c0 1 .3 2 .8 2.8-.5.9-.8 1.9-.8 3 0 3 2.9 5.3 6.5 5.3 2 0 3.7-.7 4.8-1.8.4-.4.4-1 0-1.4s-1-.4-1.4 0c-.7.7-2 1.2-3.4 1.2-2.5 0-4.5-1.5-4.5-3.3 0-.5.2-1 .5-1.5.9.9 2.2 1.5 3.7 1.7.6.1 1.1-.4 1.1-1s-.4-1-1-1.1c-2.6-.4-4.3-2-4.3-3.9 0-2 2.2-3.8 5-3.8s5 1.8 5 3.8c0 .8-.4 1.6-1 2.2l.9 1.6c1.2-.9 2.1-2.3 2.1-3.8 0-.7-.2-1.4-.5-2l.3-.6L14.6 3l2.6 1.7c.6-.4 1.4-.6 2.1-.6 1.9 0 3.4 1.5 3.4 3.4 0 1.9-1.5 3.4-3.4 3.4-.6 0-1 .4-1 1s.4 1 1 1c3 0 5.4-2.4 5.4-5.4S22.3 2.1 19.3 2.1z"/></svg>'
+      };
+      function replaceIcons(){
+        document.querySelectorAll('i.bx').forEach(function(el){
+          if (el.querySelector('svg')) return;
+          var name = '';
+          el.classList.forEach(function(c){
+            if (ICONS[c]) name = c;
+          });
+          if (name) el.innerHTML = ICONS[name];
+        });
+        var st = document.createElement('style');
+        st.textContent = 'i.bx svg{width:1.25em;height:1.25em;display:block}';
+        document.head.appendChild(st);
+      }
+      var iconTimer = setTimeout(replaceIcons, 1600);
+      try {
+        document.fonts.ready.then(function(){
+          if (!document.fonts.check('1em boxicons')) {
+            clearTimeout(iconTimer);
+            replaceIcons();
+          }
+          else clearTimeout(iconTimer);
+        });
+      }
+      catch(e){
+        /* replaceIcons already scheduled */ }
+    })();
+  </script>
+</body>
+</html>
